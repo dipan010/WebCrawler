@@ -7,13 +7,20 @@ class GnosisFreightSpider(scrapy.Spider):
     allowed_domains = ["gnosisfreight.com"]
     start_urls = ["https://www.gnosisfreight.com/"]
 
-    def parse(self, parse):
+    custom_settings = {
+        "PLAYWRIGHT_ENABLED": True,
+        "PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT": 60 * 1000,
+        "PLAYWRIGHT_LAUNCH_OPTIONS": {"headless": True},
+    }
+
+    def parse(self, response):
         links = response.css("aL:attr(href)").getall()
         for link in links:
             if link.startswith("/") and not any(x in link for x in["#", "mailto", "tel"]):
                 yield response.follow(
                     link,
                     self.parse_article,
+                    meta={"playwright": True}
                 )
     
     def parse_article(self, response):
