@@ -1,6 +1,6 @@
 import scrapy
 
-class Item(scrapy.item):
+class Item(scrapy.Item):
     url = scrapy.Field()
     title = scrapy.Field()
     author = scrapy.Field()
