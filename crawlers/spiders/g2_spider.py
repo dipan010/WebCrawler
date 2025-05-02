@@ -27,3 +27,9 @@ class G2Spider(scrapy.Spider):
             item["raw_html"] = listing.get()
             item["scraped_at"] = datetime.utcnow().isoformat()
             yield item
+
+        #paginate if there's a 'next' button
+            
+        next_page = response.css("a[rel='next']::attr(href)").get()
+        if next_page:
+            yield response.follow(next_page, callback= self.parse, meta={"playwright": True})
