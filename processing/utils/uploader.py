@@ -14,10 +14,7 @@ def _generate_key(prefix: str, source: str) -> str:
 def hash_article(article: dict) -> str:
     return hashlib.md5(article["url"].encode()).hexdigest()
 
-def upload_article(article: dict, source: str):
-    """
-    Uploads an article to S3 in either raw/ or processed/ based on `is_raw`.
-    """
+def upload_articleRaw(article: dict, source: str):
     raw_key = _generate_key("raw", source)
     s3_client.put_object(
         Bucket=BUCKET,
@@ -26,7 +23,9 @@ def upload_article(article: dict, source: str):
         ContentType="application/json"
     )
     print(f"Uploaded RAW to s3://{BUCKET}/{raw_key}")
-    
+
+def upload_article(article: dict, source: str):
+       
     timestamp = datetime.utcnow().strftime("%Y-%m-%d")
     folder = "processed" if is_valid_article(article) else "raw"
     key = f"{folder}/{source}/{timestamp}/{uuid.uuid4()}.json"

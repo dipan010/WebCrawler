@@ -1,5 +1,7 @@
 import json
+from utils.schema_validator import is_valid_article
 from utils.uploader import upload_article
+from processing.transform import transform_article
 
 def process_articles(filepath: str, source: str):
     with open(filepath) as f:
@@ -10,8 +12,10 @@ def process_articles(filepath: str, source: str):
         url = article.get("url")
         if not url or url in seen_urls:
             continue
-
-        upload_article(article, source)
+        
+        transformed = transform_article(article)
+        if is_valid_article(transformed):
+            upload_article(article, source)
         seen_urls.add(url)
 
 if __name__ == "__main__":
