@@ -1,11 +1,21 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from datetime import datetime
+from airflow.providers.slack.operators.slack_webhook import SlackWebhookOperator
+from airflow.utils.dates import days_ago
+from datetime import datetime, timedelta
 from processing.processUpload import process_articles
 
+
 default_args = {
-    'start_date': datetime(2025, 5, 1),
-    'catchup': False
+    "owner": "airflow",
+    "depends_on_past": False,
+    "email": ["dipan.ghosh@hotmail.com"],
+    "email_on_failure": True,
+    "email_on_retry": False,
+    "retries": 3,
+    "retry_delay": timedelta(minutes=5),
+    "start_date": datetime(2025, 5, 1),
+    "catchup": False
 }
 
 with DAG(
@@ -33,4 +43,12 @@ with DAG(
         },
     )
 
-    [process_newsapi_articles, process_crawler_articles]
+    slack_alert = SlackWebhookOperator(
+        task_id='slack_failure_alert',
+        http_conn_id='slack_connection',
+        message=":rotating_light: *DAG upload_articles_pipeline failed!* Check Airflow logs.",
+        channel="#alerts",
+        trigger_rule="one_failed"
+    )
+
+    [process_newsapi_articles, process_crawler_articles] >> slack_alert
