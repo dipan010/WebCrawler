@@ -10,3 +10,4 @@ class Item(scrapy.Item):
     content = scrapy.Field()
     raw_html = scrapy.Field()
     scraped_at = scrapy.Field()
+    source = scrapy.Field()
