@@ -11,10 +11,9 @@ def process_articles(filepath: str, source: str):
         url = article.get("url")
         if not url or url in seen_urls:
             continue
-
-        if is_valid_article(article):
-            upload_article(article, source)
-            seen_urls.add(url)
+        
+        upload_article(article, source)
+        seen_urls.add(url)
 
 if __name__ == "__main__":
     process_articles("output/articles_output.json", source="newsapi")
