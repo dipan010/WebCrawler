@@ -1,5 +1,5 @@
 import json
-from utils.validator import is_valid_article
+from utils.schema_validator import is_valid_article
 from utils.uploader import upload_article
 
 def process_articles(filepath: str, source: str):
