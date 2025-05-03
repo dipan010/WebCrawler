@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from crawlers.items import Item
 
-API_KEY = "0500c2e672464d08b5db8d0348be270d"
+API_KEY = os.getenv("NEWSAPI_KEY")
 BASE_URL = "https://newsapi.org/v2/everything"
 
 def fetch_news(query="supply chain OR logistics", page_size=20):
