@@ -1,5 +1,4 @@
 import json
-from utils.schema_validator import is_valid_article
 from utils.uploader import upload_article
 
 def process_articles(filepath: str, source: str):
@@ -11,7 +10,7 @@ def process_articles(filepath: str, source: str):
         url = article.get("url")
         if not url or url in seen_urls:
             continue
-        
+
         upload_article(article, source)
         seen_urls.add(url)
 
