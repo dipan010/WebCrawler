@@ -27,8 +27,8 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 PLAYWRIGHT_BROWSER_TYPE = "chromium"
 PLAYWRIGHT_LAUNCH_OPTIONS = {"headless": True}
 
-ITEM_PIPELINES = {
-    "crawlers.pipeline.ArticlePipeline": 300,
-}
+# ITEM_PIPELINES = {
+#     "crawlers.pipeline.ArticlePipeline": 300,
+# }
 
 LOG_LEVEL = "INFO"
