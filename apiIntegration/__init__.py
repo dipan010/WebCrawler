@@ -1,0 +1,1 @@
+from .newapi_fetcher import fetch_news
