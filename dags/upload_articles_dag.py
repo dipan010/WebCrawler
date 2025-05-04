@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from processing.processUpload import process_articles
 from processing.utils.uploader import upload_raw_file
 from apiIntegration.newapi_fetcher import fetch_news
-from crawlers.spiders import *
+from crawlers.spiders import run_all_spiders
 import os
 
 DEFAULT_OUTPUT_DIR = "/app/output"
